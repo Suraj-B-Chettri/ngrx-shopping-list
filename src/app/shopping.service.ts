@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { delay } from 'rxjs/operators';
 import { ShoppingItem } from './store/models/shopping-item.models';
+import { ShoppingAction } from './store/actions/shopping.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class ShoppingService {
   constructor(private http: HttpClient) { }
 
   getShoppingItem(){
-    return this.http.get(this.Shopping_url).pipe(
+    return this.http.get<Array<ShoppingItem>>(this.Shopping_url).pipe(
       delay(500)
     )
   }

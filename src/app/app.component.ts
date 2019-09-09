@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import {v4 as uuid} from 'uuid';
 
 import { ShoppingItem } from './store/models/shopping-item.models';
-import { AddItemAction, RemoveItemAction } from './store/actions/shopping.actions';
+import { AddItemAction, DeleteItemAction, LoadShoppingAction } from './store/actions/shopping.actions';
 
 @Component({
   selector: 'app-root',
@@ -13,21 +13,31 @@ import { AddItemAction, RemoveItemAction } from './store/actions/shopping.action
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
-  shoppingItems$: Observable<Array<ShoppingItem>>
-  newShoppingItem :ShoppingItem = {id : '', name: ''};
-  constructor(private store: Store<AppState>){}
+  shoppingItems$: Observable<Array<ShoppingItem>>;
+  loading$: Observable<Boolean>;
+  error$: Observable<Error>
+  newShoppingItem: ShoppingItem = { id: '', name: '' }
 
-  ngOnInit(): void{
-    this.shoppingItems$ = this.store.select(store=> store.shopping);
+  constructor(private store: Store<AppState>) { }
+
+  ngOnInit() {
+    this.shoppingItems$ = this.store.select(store => store.shopping.list);
+    this.loading$ = this.store.select(store => store.shopping.loading);
+    this.error$ = this.store.select(store => store.shopping.error);
+
+
+    this.store.dispatch(new LoadShoppingAction());
   }
 
-  addItem(): void {
-    this.newShoppingItem.id = uuid();
+  addItem() {
+  this.newShoppingItem.id = uuid();
+
     this.store.dispatch(new AddItemAction(this.newShoppingItem));
-    this.newShoppingItem = {id: '', name: ''};
+
+    this.newShoppingItem = { id: '', name: '' };
   }
 
-  removeItem(removeItemId): void {
-    this.store.dispatch(new RemoveItemAction(removeItemId))
+  deleteItem(id: string) {
+    this.store.dispatch(new DeleteItemAction(id));
   }
 }

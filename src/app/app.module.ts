@@ -7,7 +7,9 @@ import { StoreModule } from '@ngrx/store';
 import { ShoppingReducer } from './store/reducers/shopping.reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { HttpClientModule } from '@angular/common/http';
 
+// ngrx entity
 @NgModule({
   declarations: [
     AppComponent
@@ -15,6 +17,7 @@ import { environment } from '../environments/environment';
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     StoreModule.forRoot({
       shopping: ShoppingReducer
     }),
