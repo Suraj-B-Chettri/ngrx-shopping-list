@@ -9,12 +9,16 @@ const initialState : Array<ShoppingItem> = [
 ]
 
 export function ShoppingReducer(state: Array<ShoppingItem> = initialState, action: ShoppingAction){
-
+  const StateWithoutItem = (state, itemId )=> state.filter(state => state.id !== itemId )
   switch(action.type) {
     case ShoppingActionTypes.ADD_ITEM:
       return [...state, action.payload];
 
+    case ShoppingActionTypes.REMOVE_ITEM:
+      return [...StateWithoutItem(state, action.payload)]
     default:
       return state;
   }
+
+
 }
