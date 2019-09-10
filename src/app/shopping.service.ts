@@ -9,12 +9,13 @@ import { ShoppingAction } from './store/actions/shopping.actions';
 })
 export class ShoppingService {
 
-  private Shopping_url = "https://30327969-8347-45ee-9241-aacef96797d7.mock.pstmn.io/ngrx-data";
+  private Shopping_url = "http://localhost:3000/shopping/";
 
   constructor(private http: HttpClient) { }
 
   getShoppingItem(){
-    return this.http.get<Array<ShoppingItem>>(this.Shopping_url).pipe(
+    return this.http.get<Array<ShoppingItem>>(this.Shopping_url)
+    .pipe(
       delay(500)
     )
   }

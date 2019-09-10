@@ -1,0 +1,20 @@
+{
+  "shopping": [
+    {
+      "id": 1,
+      "name": "Diet Coke"
+    },
+    {
+      "id": "dc788c79-1ece-44b5-a114-5888bf9bc8d9",
+      "name": ""
+    },
+    {
+      "id": "2d35ed58-b2dc-486e-8c39-870a9528cd77",
+      "name": "fanta"
+    },
+    {
+      "id": "2504dacd-a036-4f3f-9994-145834fa4fb6",
+      "name": "coke"
+    }
+  ]
+}
