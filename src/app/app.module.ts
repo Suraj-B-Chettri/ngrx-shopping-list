@@ -8,6 +8,8 @@ import { ShoppingReducer } from './store/reducers/shopping.reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
+import { EffectsModule } from '@ngrx/effects';
+import { ShoppingEffects } from './store/effects/shopping.effects';
 
 // ngrx entity
 @NgModule({
@@ -19,8 +21,9 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule,
     StoreModule.forRoot({
-      shopping: ShoppingReducer
-    }),
+      shopping: ShoppingReducer,
+      }),
+      EffectsModule.forRoot([ShoppingEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
   providers: [],

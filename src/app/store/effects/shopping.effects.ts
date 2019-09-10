@@ -9,22 +9,22 @@ import { ShoppingService } from 'src/app/shopping.service';
 @Injectable()
 export class ShoppingEffects {
 
-  @Effect() loadingShopping$ =  this.actions$
+  @Effect() loadShopping$ = this.actions$
     .pipe(
       ofType<LoadShoppingAction>(ShoppingActionTypes.LOAD_SHOPPING),
       mergeMap(
-        ()=>this.shoppingService.getShoppingItem()
-        .pipe(
-          map(data=>{
-            console.log(data)
-            return new LoadShoppingSuccessAction(data)
-          }),
-          catchError(error=> of(new LoadShoppingFailureAction(error)))
-        )
-      )
-    )
+        () => this.shoppingService.getShoppingItems()
+          .pipe(
+            map(data => {
+              console.log(data)
+              return new LoadShoppingSuccessAction(data)
+            }),
+            catchError(error => of(new LoadShoppingFailureAction(error)))
+          )
+      ),
+  )
 
-    @Effect() addShoppingItem$ = this.actions$
+  @Effect() addShoppingItem$ = this.actions$
     .pipe(
       ofType<AddItemAction>(ShoppingActionTypes.ADD_ITEM),
       mergeMap(
@@ -40,13 +40,14 @@ export class ShoppingEffects {
     .pipe(
       ofType<DeleteItemAction>(ShoppingActionTypes.DELETE_ITEM),
       mergeMap(
-        (data) => this.shoppingService.removeShoppingItem(data.payload)
+        (data) => this.shoppingService.deleteShoppingItem(data.payload)
           .pipe(
             map(() => new DeleteItemSuccessAction(data.payload)),
             catchError(error => of(new AddItemFailureAction(error)))
           )
       )
     )
+
   constructor(
     private actions$: Actions,
     private shoppingService: ShoppingService
